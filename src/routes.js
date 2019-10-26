@@ -14,6 +14,7 @@ import ValoracionesApp from './components/Valoraciones';
 import Buscador from './components/Buscador';
 import FollowingItems from './components/FollowingItems';
 import FollowingSellers from './components/FollowingSellers';
+import MisPublis from './components/MisPublis';
 
 const AppRoutes = () =>
     <App>
@@ -26,6 +27,7 @@ const AppRoutes = () =>
             <Route exact path="/FollowingItems" component={FollowingItems} />
             <Route exact path="/FollowingSellers" component={FollowingSellers} />
             <Route exact path="/logued_in" component={LoguedIn} />
+            <Route exact path="/mispublis" component={MisPublis} />
             <Route exact path="/" component={Home} />
             <Route component={Page404} />
         </Switch>

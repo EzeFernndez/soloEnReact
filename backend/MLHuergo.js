@@ -7,6 +7,7 @@ const cors = require('cors');
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const request = require('request');
+var meli = require('mercadolibre');
 const PORT = 4000;
 
 var token; //En donde quedara guardado el access token
@@ -187,7 +188,72 @@ app.get('/ventasEnOrden',function(req,res){
     })
 
 })
+var arreglo = [];
+var contador = 0;
+function laotrafuncionquequiererenzo(parametro) {
+    setTimeout(lafuncionquequiererenzo,10000,parametro)
+}
 
+function lafuncionquequiererenzo(parametro) {
+        //eljason[0] = arreglo
+        
+        // console.log(arreglo)
+        console.log(arreglo)
+        parametro.send(arreglo)
+        arreglo = []
+}
+var publis = app.get('/MPublis',function(reqDeFE,resAFE) {
+      var preg = new meli.Meli(token.client_id, token.client_secret,token.access_token,token.refresh_token);
+      preg.get('/users/me', function (err, resu){
+          //console.log(err, resu);
+          jsonstr = JSON.stringify(resu);
+          pubspars = JSON.parse(jsonstr);
+  
+          preg.get('/users/'+pubspars.id+'/items/search', function (err, resi) {// sin parametros devuelve todos los items de un usuario
+                  //console.log(err, resi);
+                  //resAFE.send(resi);
+                  jsonstrprod = JSON.stringify(resi);
+                  listmisprod = JSON.parse(jsonstrprod)
+                  console.log(listmisprod)
+                  
+                  // Recorro los items del usuario
+                  var c;
+                  //console.log(listmisprod.results.length)
+              
+              //console.log('acá tengo la longitud')
+              //console.log(listmisprod.results)
+              listmisprod.results.forEach(function(value, index, array) {
+                  preg.get('/items/' + value, function (err, resmp){
+                      resmpstrin = JSON.stringify(resmp);
+                      resmppar = JSON.parse(resmpstrin);
+                    //   var listaDatos = [resmpstrin]
+                      // fs.writeFile('listaprod.json', resmpstrin, function (error) {
+                      //     if (error) throw err;
+                      // });
+                      preg.get('/sites/MLA/search',
+                              {q:resmp.title }, 
+                              function (err, resi) {
+                                  
+                                  contador = contador + 1;
+                                //   jsonstrto = JSON.stringify(resi);
+                                //   toparse = JSON.parse(resi);
+                                //   console.log(toparse)
+                                  arreglo.push(JSON.stringify(resi))
+                                //   listaDatos.push(toparse)
+                                  // fs.appendFile('listaprod.json', jsonstrto, function (error) {
+                                  //     if (error) throw err;
+                                  // });
+                      });
+                  });
+              });
+  
+              var dummyvar = 0;
+              
+              laotrafuncionquequiererenzo(resAFE)
+              
+          })
+      }) //esto saca los productos del usuario
+  })
 
 routes.route('/items').get(function(req, res) {
 
