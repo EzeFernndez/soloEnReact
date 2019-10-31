@@ -50,6 +50,7 @@ class MisPublis extends Component {
         data.labels = []; // Borramos los datos anteriores
         data.datasets = [];
         data.label = [];
+        ladata = JSON.parse(localStorage.getItem('listaprod.json'))
         try {
             ladata[posicion].results.forEach(item_competencia => {
                 console.log(contador)
@@ -79,20 +80,24 @@ class MisPublis extends Component {
         let currentComponent = this;
         fetch('http://localhost:4000/MPublis')
             .then(function (data) {
-                console.log('me la juego que lo de abajo es undefn')
-                console.log(data)
+                
                 //var dataStringified = JSON.stringify(data);// acá podes hacer cosas con res, que es la respuesta en forma de json que de dio eze}
-                localStorage.setItem('listaprod.json',JSON.stringify(JSON.parse(data)))
-                console.log(data)
-                console.log('lo de arriba es el data raro')
-                data.forEach(item => {
+                return data.json()
+            })
+            .then(ladata => {
+                console.log(ladata);
+                //var da = JSON.parse(data)
+                ladata.forEach( item => {
                     listita.push(item.query)
-                });
+                })
+                
                 console.log(listita)
                 //this.establecerEstado.bind(this)
                 //this.establecerEstado('si')
+                localStorage.setItem('listaprod.json',JSON.stringify(ladata))
                 currentComponent.setState({trajo_lista: 'si'});                
-            })
+                })
+            
         };
             
     

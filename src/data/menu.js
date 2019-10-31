@@ -33,6 +33,21 @@ export default [
         title: 'Productos Seguidos',
         url: '/FollowingItems',
 
+    },
+    {
+        title: 'Publicaciones',
+        url: '/mispublis'
+    },
+    {
+        title: 'Vendedores',
+        url: '/VenCat'
+    },
+    {
+        title: 'Tendencias',
+        url: '/TenCat'
+    },
+    {
+        title: 'Preguntas',
+        url: '/Preguntas'
     }
-
 ];
