@@ -62,7 +62,7 @@ class MisPublis extends Component {
                 if (contador == 0) {
                     data.datasets.push({
                         label: item_competencia.title,
-                        data: [item_competencia.price,1,2,3], // Esto requiere un valor por cada label.
+                        data: [item_competencia.price,1,2,3], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
                         fill: true,
                         backgroundColor:"rgb(255,255,0,1)",
                         borderColor:"rgb(9,56,8)",
@@ -124,6 +124,7 @@ class MisPublis extends Component {
         console.log('lo de abajo es producto')
         //console.log(producto)
         console.log(listita)
+        //ARMAR OTRO BUTTON GROUP CON LAS COSAS A COMPARAR
         return (
         <div id="publis">
             <h1 style={{textAlign: 'center'}} class = "titulo" >Publicaciones</h1>
