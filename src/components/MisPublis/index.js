@@ -54,19 +54,30 @@ class MisPublis extends Component {
         try {
             ladata[posicion].results.forEach(item_competencia => {
                 console.log(contador)
-                if(contador > 9) {
+                if(contador > 10) {
                     console.log(contador)
                     throw BreakException;
                 }
                 console.log('despuesDatasetsVacios'+contador)
-                data.datasets.push({
-                    label: item_competencia.title,
-                    data: [item_competencia.price,1,2,3], // Esto requiere un valor por cada label.
-                    fill: true,
-                    backgroundColor:"rgb(255,7,7,0.7)",
-                    borderColor:"rgb(9,56,8)",
-                    borderWidth: 2
-                })
+                if (contador == 0) {
+                    data.datasets.push({
+                        label: item_competencia.title,
+                        data: [item_competencia.price,1,2,3], // Esto requiere un valor por cada label.
+                        fill: true,
+                        backgroundColor:"rgb(255,255,0,1)",
+                        borderColor:"rgb(9,56,8)",
+                        borderWidth: 2
+                    })
+                } else {
+                    data.datasets.push({
+                        label: item_competencia.title,
+                        data: [item_competencia.price,1,2,3], // Esto requiere un valor por cada label.
+                        fill: true,
+                        backgroundColor:"rgb(255,7,7,0.7)",
+                        borderColor:"rgb(9,56,8)",
+                        borderWidth: 2
+                    })
+                }
                 contador = contador+1;
             });
         } catch (e) {

@@ -7,6 +7,7 @@ const cors = require('cors');
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const request = require('request');
+const fs = require('fs');
 const PORT = 4000;
 
 var token; //En donde quedara guardado el access token
@@ -1148,7 +1149,7 @@ function lafuncionquequiererenzo(parametro) {
         //eljason[0] = arreglo
         
         // console.log(arreglo)
-        console.log(arreglo)
+        //console.log(arreglo)
         parametro.send(arreglo)
         arreglo = []
 }
@@ -1164,7 +1165,7 @@ var publis = app.get('/MPublis',function(reqDeFE,resAFE) {
                   //resAFE.send(resi);
                   jsonstrprod = JSON.stringify(resi);
                   listmisprod = JSON.parse(jsonstrprod)
-                  console.log(listmisprod)
+                  //console.log(listmisprod)
                   
                   // Recorro los items del usuario
                   var c;
@@ -1176,20 +1177,24 @@ var publis = app.get('/MPublis',function(reqDeFE,resAFE) {
                   preg.get('/items/' + value, function (err, resmp){
                       resmpstrin = JSON.stringify(resmp);
                       resmppar = JSON.parse(resmpstrin);
+                      console.log(resmppar)
                     //   var listaDatos = [resmpstrin]
-                      // fs.writeFile('listaprod.json', resmpstrin, function (error) {
-                      //     if (error) throw err;
-                      // });
+                       //fs.appendFile('listaprod.json', resmpstrin, function (error) {
+                           //if (error) throw err;
+                       //});
                       preg.get('/sites/MLA/search',
                               {q:resmp.title }, 
                               function (err, respuesta) {
-                                  
+                                  copia_de_resp = respuesta.results.unshift(resmp);
                                   contador = contador + 1;
                                 //   jsonstrto = JSON.stringify(resi);
                                 //   toparse = JSON.parse(resi);
                                 //   console.log(toparse)
-                                 console.log(JSON.parse(JSON.stringify(respuesta)))
+                                 //console.log(JSON.parse(JSON.stringify(respuesta)))
                                   arreglo.push(respuesta)
+                                  //fs.writeFile('resultadobusqueda.json',JSON.stringify(respuesta), function (error) {
+                                    //if (error) throw err;
+                                //});
                                 //   listaDatos.push(toparse)
                                   // fs.appendFile('listaprod.json', jsonstrto, function (error) {
                                   //     if (error) throw err;
