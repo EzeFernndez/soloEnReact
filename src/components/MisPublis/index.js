@@ -1,6 +1,7 @@
 // Dependencies
 import React, { Component } from 'react';
 import {Bar} from 'react-chartjs-2';
+import {Pie} from 'react-chartjs-2';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap';
@@ -16,7 +17,7 @@ import './InterfazMP.css';
 var listita = []
 var ladata;
 
-var data = {
+var precio = {
 
         labels:[], //mostrar acá las publicaciones
         datasets:[]
@@ -47,9 +48,9 @@ class MisPublis extends Component {
     clic_en_un_item_mio = (item, posicion) => {
         var BreakException = {};
         var contador = 0;
-        data.labels = []; // Borramos los datos anteriores
-        data.datasets = [];
-        data.label = [];
+        precio.labels = []; // Borramos los datos anteriores
+        precio.datasets = [];
+        precio.label = [];
         ladata = JSON.parse(localStorage.getItem('listaprod.json'))
         try {
             ladata[posicion].results.forEach(item_competencia => {
@@ -60,7 +61,7 @@ class MisPublis extends Component {
                 }
                 console.log('despuesDatasetsVacios'+contador)
                 if (contador == 0) {
-                    data.datasets.push({
+                    precio.datasets.push({
                         label: item_competencia.title,
                         data: [item_competencia.price,1,2,3], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
                         fill: true,
@@ -69,7 +70,7 @@ class MisPublis extends Component {
                         borderWidth: 2
                     })
                 } else {
-                    data.datasets.push({
+                    precio.datasets.push({
                         label: item_competencia.title,
                         data: [item_competencia.price,1,2,3], // Esto requiere un valor por cada label.
                         fill: true,
@@ -135,9 +136,25 @@ class MisPublis extends Component {
                         <Button onClick={() => this.clic_en_un_item_mio(item, i)}>{item}</Button>)}
                     </ButtonGroup>
                 </div>
-                <div id="graf"> 
+                <div id="precio"> 
                     <Bar
-                    data={data}
+                    data={precio}
+                    options= {options}
+                    height = {20}
+                    width = {50}
+                />
+            </div>
+            <div id="descuentos"> 
+                    <Pie
+                    data={precio}
+                    options= {options}
+                    height = {20}
+                    width = {50}
+                />
+            </div>
+            <div id="estado"> 
+                    <Pie
+                    data={precio}
                     options= {options}
                     height = {20}
                     width = {50}
@@ -147,5 +164,7 @@ class MisPublis extends Component {
         );
   }
 }
-
+//precio barras
+//descuento DE TORTAS
+//estado del item DE TORTAS
 export default (MisPublis);
