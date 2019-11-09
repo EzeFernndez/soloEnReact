@@ -22,6 +22,16 @@ var precio = {
         labels:[], //mostrar acá las publicaciones
         datasets:[]
     }
+var cantvendida = {
+
+        labels:[], //mostrar acá las publicaciones
+        datasets:[]
+}
+var estado = {
+
+    labels:[], //mostrar acá las publicaciones
+    datasets:[]
+}
 
 var options = {
     maintainAspectRtio: false,
@@ -50,7 +60,13 @@ class MisPublis extends Component {
         var contador = 0;
         precio.labels = []; // Borramos los datos anteriores
         precio.datasets = [];
-        precio.label = [];
+        precio.label = []; 
+        cantvendida.labels = []; // Borramos los datos anteriores
+        cantvendida.datasets = [];
+        cantvendida.label = [];
+        estado.labels = []; // Borramos los datos anteriores
+        estado.datasets = [];
+        estado.label = [];
         ladata = JSON.parse(localStorage.getItem('listaprod.json'))
         try {
             ladata[posicion].results.forEach(item_competencia => {
@@ -63,7 +79,26 @@ class MisPublis extends Component {
                 if (contador == 0) {
                     precio.datasets.push({
                         label: item_competencia.title,
-                        data: [item_competencia.price,1,2,3], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
+                        labels: item_competencia.title,
+                        data: [item_competencia.price], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
+                        fill: true,
+                        backgroundColor:"rgb(255,255,0,1)",
+                        borderColor:"rgb(9,56,8)",
+                        borderWidth: 2
+                    })
+                    cantvendida.datasets.push({ 
+                        label: item_competencia.title,
+                        labels: item_competencia.title,
+                        data: [item_competencia.sold_quantity], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
+                        fill: true,
+                        backgroundColor:"rgb(255,255,0,1)",
+                        borderColor:"rgb(9,56,8)",
+                        borderWidth: 2
+                    })
+                    estado.datasets.push({ 
+                        label: item_competencia.title,
+                        labels: item_competencia.title,
+                        data: [item_competencia.condition], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
                         fill: true,
                         backgroundColor:"rgb(255,255,0,1)",
                         borderColor:"rgb(9,56,8)",
@@ -72,13 +107,33 @@ class MisPublis extends Component {
                 } else {
                     precio.datasets.push({
                         label: item_competencia.title,
-                        data: [item_competencia.price,1,2,3], // Esto requiere un valor por cada label.
+                        labels: item_competencia.title,
+                        data: [item_competencia.price], // Esto requiere un valor por cada label.
+                        fill: true,
+                        backgroundColor:"rgb(255,7,7,0.7)",
+                        borderColor:"rgb(9,56,8)",
+                        borderWidth: 2
+                    })
+                    cantvendida.datasets.push({
+                        label: item_competencia.title,
+                        labels: item_competencia.title,
+                        data: [item_competencia.sold_quantity], // Esto requiere un valor por cada label.
+                        fill: true,
+                        backgroundColor:"rgb(255,7,7,0.7)",
+                        borderColor:"rgb(9,56,8)",
+                        borderWidth: 2
+                    })
+                    estado.datasets.push({
+                        label: item_competencia.title,
+                        labels: item_competencia.title,
+                        data: [item_competencia.condition], // Esto requiere un valor por cada label.
                         fill: true,
                         backgroundColor:"rgb(255,7,7,0.7)",
                         borderColor:"rgb(9,56,8)",
                         borderWidth: 2
                     })
                 }
+                console.log('despuesDatasetsVacios'+contador)
                 contador = contador+1;
             });
         } catch (e) {
@@ -144,9 +199,9 @@ class MisPublis extends Component {
                     width = {50}
                 />
             </div>
-            <div id="descuentos"> 
-                    <Pie
-                    data={precio}
+            <div id="cantvendida"> 
+                    <Bar
+                    data={cantvendida}
                     options= {options}
                     height = {20}
                     width = {50}
@@ -154,7 +209,7 @@ class MisPublis extends Component {
             </div>
             <div id="estado"> 
                     <Pie
-                    data={precio}
+                    data={estado}
                     options= {options}
                     height = {20}
                     width = {50}
