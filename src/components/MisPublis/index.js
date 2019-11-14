@@ -43,6 +43,15 @@ var options = {
         }]
     }
 }
+var optionspie = {
+    maintainAspectRatio: false,
+    legend: {
+      position: 'left',
+      labels: {
+        boxWidth: 10
+      }
+    }
+}
 
 class MisPublis extends Component {
     constructor(props) {
@@ -96,14 +105,10 @@ class MisPublis extends Component {
                         borderWidth: 2
                     })
                     estado.datasets.push({ 
-                        label: item_competencia.title,
                         labels: item_competencia.title,
-                        data: [item_competencia.condition], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
-                        fill: true,
+                        data: [item_competencia.condition], // Esto requiere un valor por cada label.
                         backgroundColor:"rgb(255,255,0,1)",
-                        borderColor:"rgb(9,56,8)",
-                        borderWidth: 2
-                    })
+                        hoverBackgroundColor: "rgb(9,56,8)"                    })
                 } else {
                     precio.datasets.push({
                         label: item_competencia.title,
@@ -124,13 +129,10 @@ class MisPublis extends Component {
                         borderWidth: 2
                     })
                     estado.datasets.push({
-                        label: item_competencia.title,
                         labels: item_competencia.title,
                         data: [item_competencia.condition], // Esto requiere un valor por cada label.
-                        fill: true,
                         backgroundColor:"rgb(255,7,7,0.7)",
-                        borderColor:"rgb(9,56,8)",
-                        borderWidth: 2
+                        hoverBackgroundColor: "rgb(9,56,8)"
                     })
                 }
                 console.log('despuesDatasetsVacios'+contador)
@@ -185,14 +187,14 @@ class MisPublis extends Component {
         <div id="publis">
             <h1 style={{textAlign: 'center'}} class = "titulo" >Publicaciones</h1>
                 <div id="buton">
-                    <ButtonGroup vertical>
+                    <ButtonGroup horizontal>
                         {listita.map((item, i) =>
                         //<Button }>{item}</Button>
                         <Button onClick={() => this.clic_en_un_item_mio(item, i)}>{item}</Button>)}
                     </ButtonGroup>
                 </div>
-                <div id="precio"> 
-                    <Bar
+            <div id="precio"> 
+                <Bar
                     data={precio}
                     options= {options}
                     height = {20}
@@ -210,9 +212,9 @@ class MisPublis extends Component {
             <div id="estado"> 
                     <Pie
                     data={estado}
-                    options= {options}
+                    options= {optionspie}
                     height = {20}
-                    width = {50}
+                    width = {50}    
                 />
             </div>
         </div>
