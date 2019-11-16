@@ -105,12 +105,6 @@ class MisPublis extends Component {
                         borderColor:"rgb(9,56,8)",
                         borderWidth: 2
                     })
-                    if (item_competencia.ITEM_CONDITION  === "Usado"){
-                        usados=usados+1;
-                    }
-                    if (item_competencia.ITEM_CONDITION  === "Nuevo"){
-                        nuevos=nuevos+1;
-                    }
                 } else {
                     precio.datasets.push({
                         label: item_competencia.title,
@@ -130,11 +124,12 @@ class MisPublis extends Component {
                         borderColor:"rgb(9,56,8)",
                         borderWidth: 2
                     })
-                    if (item_competencia.ITEM_CONDITION  == "Usado"){
-                        usados=usados+1
+                    console.log(item_competencia.condition)
+                    if (item_competencia.condition  == "used"){
+                        usados=usados+1;
                     }
-                    if (item_competencia.ITEM_CONDITION  == "Nuevo"){
-                        nuevos=nuevos+1
+                    if (item_competencia.condition  == "new"){
+                        nuevos=nuevos+1;
                     }
                 }
                 console.log('despuesDatasetsVacios'+contador)
@@ -143,14 +138,24 @@ class MisPublis extends Component {
         } catch (e) {
             if (e !== BreakException) throw e;
         }
-        estado.datasets.push({
-            label:'Usados', //mostrar acá las publicaciones
-            data:[usados]
-        })
-        estado.datasets.push({
-            label:'Nuevos', //mostrar acá las publicaciones
-            data:[nuevos]
-        })
+        console.log(usados,'usados')
+        console.log(nuevos,'nuevos')
+        estado = {
+            datasets: [{
+                data: [usados, nuevos],
+                backgroundColor:['#00ff00','#ff0000'],
+                hoverBackgroundColor: ['#00ff00','#ff0000'],
+            }],
+        
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: [
+                'Usados',
+                'Nuevos',
+            ],
+
+        };
+
+        console.log(estado)
 
         this.setState({nuevo_plot : 'si'})
         this.setState({nuevo_plot : 'no'})
@@ -194,6 +199,7 @@ class MisPublis extends Component {
         //console.log(producto)
         console.log(listita)
         //ARMAR OTRO BUTTON GROUP CON LAS COSAS A COMPARAR
+        console.log(estado)
         return (
         <div id="publis">
             <h1 style={{textAlign: 'center'}} class = "titulo" >Publicaciones</h1>
@@ -224,10 +230,11 @@ class MisPublis extends Component {
                     <Pie
                     data={estado}
                     options= {optionspie}
-                    height = {20}   
-                    width = {50}    
+                    height = {500}   
+                    width = {500}    
                 />
             </div>
+
         </div>
         );
   }
