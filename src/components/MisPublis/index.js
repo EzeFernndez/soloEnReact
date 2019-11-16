@@ -16,7 +16,8 @@ import './InterfazMP.css';
 
 var listita = []
 var ladata;
-
+var usados = 0;
+var nuevos = 0;
 var precio = {
 
         labels:[], //mostrar acá las publicaciones
@@ -104,11 +105,12 @@ class MisPublis extends Component {
                         borderColor:"rgb(9,56,8)",
                         borderWidth: 2
                     })
-                    estado.datasets.push({ 
-                        labels: item_competencia.title,
-                        data: [item_competencia.condition], // Esto requiere un valor por cada label.
-                        backgroundColor:"rgb(255,255,0,1)",
-                        hoverBackgroundColor: "rgb(9,56,8)"                    })
+                    if (item_competencia.ITEM_CONDITION  === "Usado"){
+                        usados=usados+1;
+                    }
+                    if (item_competencia.ITEM_CONDITION  === "Nuevo"){
+                        nuevos=nuevos+1;
+                    }
                 } else {
                     precio.datasets.push({
                         label: item_competencia.title,
@@ -128,12 +130,12 @@ class MisPublis extends Component {
                         borderColor:"rgb(9,56,8)",
                         borderWidth: 2
                     })
-                    estado.datasets.push({
-                        labels: item_competencia.title,
-                        data: [item_competencia.condition], // Esto requiere un valor por cada label.
-                        backgroundColor:"rgb(255,7,7,0.7)",
-                        hoverBackgroundColor: "rgb(9,56,8)"
-                    })
+                    if (item_competencia.ITEM_CONDITION  == "Usado"){
+                        usados=usados+1
+                    }
+                    if (item_competencia.ITEM_CONDITION  == "Nuevo"){
+                        nuevos=nuevos+1
+                    }
                 }
                 console.log('despuesDatasetsVacios'+contador)
                 contador = contador+1;
@@ -141,6 +143,15 @@ class MisPublis extends Component {
         } catch (e) {
             if (e !== BreakException) throw e;
         }
+        estado.datasets.push({
+            label:'Usados', //mostrar acá las publicaciones
+            data:[usados]
+        })
+        estado.datasets.push({
+            label:'Nuevos', //mostrar acá las publicaciones
+            data:[nuevos]
+        })
+
         this.setState({nuevo_plot : 'si'})
         this.setState({nuevo_plot : 'no'})
     } 
@@ -213,7 +224,7 @@ class MisPublis extends Component {
                     <Pie
                     data={estado}
                     options= {optionspie}
-                    height = {20}
+                    height = {20}   
                     width = {50}    
                 />
             </div>
