@@ -30,7 +30,7 @@ var cantvendida = {
 }
 var estado = {
 
-    labels:[], //mostrar acá las publicaciones
+    labels:['hola','chau'], //mostrar acá las publicaciones
     datasets:[]
 }
 
@@ -68,13 +68,13 @@ class MisPublis extends Component {
     clic_en_un_item_mio = (item, posicion) => {
         var BreakException = {};
         var contador = 0;
-        precio.labels = []; // Borramos los datos anteriores
+        precio.labels = [""]; // Borramos los datos anteriores
         precio.datasets = [];
         precio.label = []; 
-        cantvendida.labels = []; // Borramos los datos anteriores
+        cantvendida.labels = [""]; // Borramos los datos anteriores
         cantvendida.datasets = [];
         cantvendida.label = [];
-        estado.labels = []; // Borramos los datos anteriores
+        estado.labels = [""]; // Borramos los datos anteriores
         estado.datasets = [];
         estado.label = [];
         ladata = JSON.parse(localStorage.getItem('listaprod.json'))
@@ -89,7 +89,6 @@ class MisPublis extends Component {
                 if (contador == 0) {
                     precio.datasets.push({
                         label: item_competencia.title,
-                        labels: item_competencia.title,
                         data: [item_competencia.price], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
                         fill: true,
                         backgroundColor:"rgb(255,255,0,1)",
@@ -98,7 +97,6 @@ class MisPublis extends Component {
                     })
                     cantvendida.datasets.push({ 
                         label: item_competencia.title,
-                        labels: item_competencia.title,
                         data: [item_competencia.sold_quantity], // ESTO ES LO QUE HAY QUE TOCAR PARA ELEGIR QUE MEDIR.
                         fill: true,
                         backgroundColor:"rgb(255,255,0,1)",
@@ -108,7 +106,6 @@ class MisPublis extends Component {
                 } else {
                     precio.datasets.push({
                         label: item_competencia.title,
-                        labels: item_competencia.title,
                         data: [item_competencia.price], // Esto requiere un valor por cada label.
                         fill: true,
                         backgroundColor:"rgb(255,7,7,0.7)",
@@ -117,7 +114,6 @@ class MisPublis extends Component {
                     })
                     cantvendida.datasets.push({
                         label: item_competencia.title,
-                        labels: item_competencia.title,
                         data: [item_competencia.sold_quantity], // Esto requiere un valor por cada label.
                         fill: true,
                         backgroundColor:"rgb(255,7,7,0.7)",
